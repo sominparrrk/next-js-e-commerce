@@ -1,0 +1,26 @@
+.button {
+  padding: var(--spacing-10) var(--spacing-20);
+  border: none;
+  border-radius: 4px;
+  font-size: var(--font-size-16);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button.primary {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.button.primary:hover {
+  background-color: var(--secondary);
+}
+
+.button.secondary {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.button.secondary:hover {
+  background-color: var(--gray);
+}
