@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DM_Sans } from 'next/font/google';
 import SWRConfigContext from '@/context/SWRConfigContext';
 import Navbar from '@/components/Navbar/Navbar';
@@ -13,12 +13,25 @@ const openSans = DM_Sans({
   weight: '400',
 });
 
+const localStorageKey = 'searchValue';
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [inputValue, setInputValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+
+  useEffect(() => {
+    const storedValue = localStorage.getItem(localStorageKey);
+    if (storedValue) {
+      setSearchValue(storedValue);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, searchValue);
+  }, [searchValue]);
 
   return (
     <html lang='en' className={openSans.className}>
@@ -32,8 +45,8 @@ export default function RootLayout({
                 id='search'
                 label='Search'
                 placeholder='Search for products ...'
-                value={inputValue}
-                onChange={setInputValue}
+                value={searchValue}
+                onChange={setSearchValue}
               />
             </div>
           </header>
