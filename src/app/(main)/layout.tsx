@@ -1,11 +1,12 @@
 'use client';
+import { useState } from 'react';
 import { DM_Sans } from 'next/font/google';
-import '../globals.css';
+import SWRConfigContext from '@/context/SWRConfigContext';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import Input from '@/components/Input/Input';
-import { useState } from 'react';
-import SWRConfigContext from '@/context/SWRConfigContext';
+import '../globals.css';
+import styles from './layout.module.css';
 
 const openSans = DM_Sans({
   subsets: ['latin'],
@@ -22,9 +23,9 @@ export default function RootLayout({
   return (
     <html lang='en' className={openSans.className}>
       <body>
-        <header>
+        <header className={styles.layoutHeader}>
           <Navbar />
-          <div>
+          <div className={styles.inputContainer}>
             <Input
               type='text'
               id='search'
@@ -35,10 +36,10 @@ export default function RootLayout({
             />
           </div>
         </header>
-        <main>
+        <main className={styles.mainContent}>
           <SWRConfigContext>{children}</SWRConfigContext>
         </main>
-        <footer>
+        <footer className={styles.layoutFooter}>
           <Footer />
         </footer>
       </body>
