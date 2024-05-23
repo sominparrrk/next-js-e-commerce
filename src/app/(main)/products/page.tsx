@@ -1,11 +1,13 @@
 'use client';
-import { PLPSortOptionType } from '@/types/sort';
-import CategoryBar from '@/components/CategoryBar/CategoryBar';
-import Select from '@/components/Select/Select';
 import { useState } from 'react';
-import styles from './page.module.css';
 import useSWR from 'swr';
+import CategoryBar from '@/components/CategoryBar/CategoryBar';
 import ProductGrid from '@/components/ProductsGrid/ProductsGrid';
+import Select from '@/components/Select/Select';
+import LoadingIndicator from '@/components/LoadingIndicator/LoadingIndicator';
+import ErrorMessage from '@/components/ErrorMessage/ErrorMesssage';
+import { PLPSortOptionType } from '@/types/sort';
+import styles from './page.module.css';
 
 const sortOptions: { value: PLPSortOptionType; label: string }[] = [
   { value: 'asc', label: 'Ascending' },
@@ -26,7 +28,7 @@ export default function AllProductListingPage() {
 
   return (
     <>
-      <h1>all PLP</h1>
+      <h1 className={styles.title}>All Products</h1>
       <Select
         id={0}
         options={sortOptions}
@@ -36,7 +38,17 @@ export default function AllProductListingPage() {
       />
       <div className={styles.container}>
         <CategoryBar />
-        <ProductGrid products={products} />
+        {isLoading ? (
+          <div className={styles.stateContainer}>
+            <LoadingIndicator />
+          </div>
+        ) : error ? (
+          <div className={styles.stateContainer}>
+            <ErrorMessage message='Error occurred while fetching data' />
+          </div>
+        ) : (
+          <ProductGrid products={products} />
+        )}
       </div>
     </>
   );

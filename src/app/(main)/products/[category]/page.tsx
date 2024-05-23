@@ -1,11 +1,13 @@
 'use client';
-import { PLPSortOptionType } from '@/types/sort';
-import CategoryBar from '@/components/CategoryBar/CategoryBar';
-import Select from '@/components/Select/Select';
-import { useEffect, useState } from 'react';
-import ProductGrid from '@/components/ProductsGrid/ProductsGrid';
-import styles from '../page.module.css';
+import { useState } from 'react';
 import useSWR from 'swr';
+import CategoryBar from '@/components/CategoryBar/CategoryBar';
+import ProductGrid from '@/components/ProductsGrid/ProductsGrid';
+import Select from '@/components/Select/Select';
+import LoadingIndicator from '@/components/LoadingIndicator/LoadingIndicator';
+import ErrorMessage from '@/components/ErrorMessage/ErrorMesssage';
+import { PLPSortOptionType } from '@/types/sort';
+import styles from '../page.module.css';
 
 const sortOptions: { value: PLPSortOptionType; label: string }[] = [
   { value: 'asc', label: 'Ascending' },
@@ -24,10 +26,6 @@ export default function CategoryPLP({
     error,
   } = useSWR(`/api/products/${params.category}?sort=${selectedValue}`);
 
-  useEffect(() => {
-    console.log('selectedValue > ', selectedValue);
-  }, [selectedValue]);
-
   const handleChange = (value: PLPSortOptionType) => {
     setSelectedValue(value);
   };
@@ -44,7 +42,17 @@ export default function CategoryPLP({
       />
       <div className={styles.container}>
         <CategoryBar />
-        <ProductGrid products={products} />
+        {isLoading ? (
+          <div className={styles.stateContainer}>
+            <LoadingIndicator />
+          </div>
+        ) : error ? (
+          <div className={styles.stateContainer}>
+            <ErrorMessage message='Error occurred while fetching data' />
+          </div>
+        ) : (
+          <ProductGrid products={products} />
+        )}
       </div>
     </>
   );

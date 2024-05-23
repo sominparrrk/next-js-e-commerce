@@ -1,0 +1,10 @@
+.msgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.msg {
+  color: var(--red);
+}
