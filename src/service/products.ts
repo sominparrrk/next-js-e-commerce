@@ -9,3 +9,13 @@ export async function getCategories() {
 
   return res.json();
 }
+
+export async function getAllProducts(sort: string) {
+  const res = await fetch(`${basicAPIPath}?sort=${sort}`);
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+}
