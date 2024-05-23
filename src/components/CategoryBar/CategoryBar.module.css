@@ -1,0 +1,39 @@
+.wrapper {
+  width: 300px;
+  background-color: var(--light-gray);
+  padding: var(--spacing-20);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.list {
+  text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+}
+
+.selected {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    width: 100%;
+    padding: var(--spacing-16);
+  }
+
+  .listContainer {
+    display: flex;
+    justify-content: center;
+  }
+
+  .list {
+    text-transform: capitalize;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-32);
+  }
+}

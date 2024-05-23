@@ -1,5 +1,6 @@
 'use client';
-import { PLPSortOptionType } from '@/app/types/sort';
+import { PLPSortOptionType } from '@/types/sort';
+import CategoryBar from '@/components/CategoryBar/CategoryBar';
 import Select from '@/components/Select/Select';
 import { useEffect, useState } from 'react';
 
@@ -33,6 +34,7 @@ export default function CategoryPLP({
         onChange={handleChange}
         label={'Sort By'}
       />
+      <CategoryBar />
     </>
   );
 }

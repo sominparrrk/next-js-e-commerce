@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import Input from '@/components/Input/Input';
 import { useState } from 'react';
+import SWRConfigContext from '@/context/SWRConfigContext';
 
 const openSans = DM_Sans({
   subsets: ['latin'],
@@ -34,7 +35,9 @@ export default function RootLayout({
             />
           </div>
         </header>
-        <main>{children}</main>
+        <main>
+          <SWRConfigContext>{children}</SWRConfigContext>
+        </main>
         <footer>
           <Footer />
         </footer>
