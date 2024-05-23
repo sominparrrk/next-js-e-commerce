@@ -1,0 +1,64 @@
+.box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+  padding: var(--spacing-10) var(--spacing-20);
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.menus {
+  list-style: none;
+  display: flex;
+  gap: var(--spacing-32);
+  margin: 0;
+  padding: 0;
+}
+
+.menus a {
+  color: var(--white);
+  text-decoration: none;
+}
+
+.selected a {
+  text-decoration: underline;
+}
+
+.burgerIcon,
+.closeIcon {
+  display: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .burgerIcon,
+  .closeIcon {
+    display: block;
+  }
+
+  .menus {
+    flex-direction: column;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    background-color: var(--light-gray);
+    overflow: hidden;
+    max-height: 0;
+    z-index: 15;
+  }
+
+  .menus a {
+    color: var(--black);
+  }
+
+  .mobileOpen {
+    max-height: 200px;
+    padding: var(--spacing-20);
+  }
+
+  .mobileClose {
+    max-height: 0;
+  }
+}

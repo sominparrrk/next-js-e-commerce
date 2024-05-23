@@ -1,6 +1,7 @@
 'use client';
 import { DM_Sans } from 'next/font/google';
 import '../globals.css';
+import Navbar from '@/components/Navbar/Navbar';
 
 const openSans = DM_Sans({
   subsets: ['latin'],
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang='en' className={openSans.className}>
       <body>
-        <header>header</header>
+        <header>
+          <Navbar />
+        </header>
         <main>{children}</main>
         <footer>footer</footer>
       </body>
