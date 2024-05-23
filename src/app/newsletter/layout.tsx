@@ -1,5 +1,6 @@
 import { DM_Sans } from 'next/font/google';
 import '../globals.css';
+import SubFooter from '@/components/SubFooter/SubFooter';
 
 const openSans = DM_Sans({
   subsets: ['latin'],
@@ -15,7 +16,9 @@ export default function NewsletterLayout({
     <html lang='en' className={openSans.className}>
       <body>
         <section>{children}</section>
-        <footer>this footer is only for newsletter</footer>
+        <footer>
+          <SubFooter />
+        </footer>
       </body>
     </html>
   );
