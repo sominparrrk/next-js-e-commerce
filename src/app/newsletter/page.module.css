@@ -1,5 +1,4 @@
 .content {
-  height: calc(100vh - 85px);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -23,25 +23,27 @@ export default function RootLayout({
   return (
     <html lang='en' className={openSans.className}>
       <body>
-        <header className={styles.layoutHeader}>
-          <Navbar />
-          <div className={styles.inputContainer}>
-            <Input
-              type='text'
-              id='search'
-              label='Search'
-              placeholder='Search for products ...'
-              value={inputValue}
-              onChange={setInputValue}
-            />
-          </div>
-        </header>
-        <main className={styles.mainContent}>
-          <SWRConfigContext>{children}</SWRConfigContext>
-        </main>
-        <footer className={styles.layoutFooter}>
-          <Footer />
-        </footer>
+        <div className={styles.container}>
+          <header className={styles.layoutHeader}>
+            <Navbar />
+            <div className={styles.inputContainer}>
+              <Input
+                type='text'
+                id='search'
+                label='Search'
+                placeholder='Search for products ...'
+                value={inputValue}
+                onChange={setInputValue}
+              />
+            </div>
+          </header>
+          <main className={styles.mainContent}>
+            <SWRConfigContext>{children}</SWRConfigContext>
+          </main>
+          <footer className={styles.layoutFooter}>
+            <Footer />
+          </footer>
+        </div>
       </body>
     </html>
   );

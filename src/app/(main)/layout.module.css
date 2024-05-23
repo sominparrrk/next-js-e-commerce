@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .layoutHeader {
   position: sticky;
   top: 0;
@@ -14,7 +20,11 @@
 }
 
 .mainContent {
+  flex: 1;
   padding: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .layoutFooter {
