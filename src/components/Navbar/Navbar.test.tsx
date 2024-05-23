@@ -45,6 +45,20 @@ describe('Navbar component', () => {
     expect(getByLabelText('menu-open-icon')).toBeInTheDocument();
   });
 
+  it('closes mobile menu when clicking outside', () => {
+    const { getByLabelText, container } = render(<Navbar />);
+
+    const burgerMenuIcon = getByLabelText('menu-open-icon');
+    fireEvent.click(burgerMenuIcon);
+
+    const closeIcon = getByLabelText('menu-close-icon');
+    expect(closeIcon).toBeInTheDocument();
+
+    fireEvent.mouseDown(container);
+
+    expect(getByLabelText('menu-open-icon')).toBeInTheDocument();
+  });
+
   it('highlights selected menu', async () => {
     (usePathname as jest.Mock).mockReturnValueOnce('/products');
     const { getByText } = render(<Navbar />);

@@ -2,11 +2,16 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
-import { useState } from 'react';
+import { useState, useRef, useEffect, MutableRefObject } from 'react';
 import { CloseIcon } from '../icons/Close';
 import { BurgerMenuIcon } from '../icons/BurgerMenu';
 
-const menu = [
+interface MenuItem {
+  name: string;
+  href: string;
+}
+
+const menu: MenuItem[] = [
   {
     name: 'Home',
     href: '/',
@@ -24,27 +29,52 @@ const menu = [
 export default function Navbar() {
   const pathName = usePathname();
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
+  const menuRef: MutableRefObject<HTMLUListElement | null> = useRef(null);
+  const burgerIconRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
 
   const handleBurger = () => {
     setIsBurgerOpen(!isBurgerOpen);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        burgerIconRef.current &&
+        !burgerIconRef.current.contains(event.target as Node)
+      ) {
+        setIsBurgerOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <nav className={styles.box}>
       {isBurgerOpen ? (
-        <CloseIcon
-          className={styles.closeIcon}
-          onClick={handleBurger}
-          aria-label='menu-close-icon'
-        />
+        <div ref={burgerIconRef}>
+          <CloseIcon
+            className={styles.closeIcon}
+            onClick={handleBurger}
+            aria-label='menu-close-icon'
+          />
+        </div>
       ) : (
-        <BurgerMenuIcon
-          className={styles.burgerIcon}
-          onClick={handleBurger}
-          aria-label='menu-open-icon'
-        />
+        <div ref={burgerIconRef}>
+          <BurgerMenuIcon
+            className={styles.burgerIcon}
+            onClick={handleBurger}
+            aria-label='menu-open-icon'
+          />
+        </div>
       )}
       <ul
+        ref={menuRef}
         className={`${styles.menus} ${
           isBurgerOpen ? styles.mobileOpen : styles.mobileClose
         }`}
