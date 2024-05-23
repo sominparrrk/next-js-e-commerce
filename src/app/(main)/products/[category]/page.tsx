@@ -3,6 +3,9 @@ import { PLPSortOptionType } from '@/types/sort';
 import CategoryBar from '@/components/CategoryBar/CategoryBar';
 import Select from '@/components/Select/Select';
 import { useEffect, useState } from 'react';
+import ProductGrid from '@/components/ProductsGrid/ProductsGrid';
+import styles from '../page.module.css';
+import useSWR from 'swr';
 
 const sortOptions: { value: PLPSortOptionType; label: string }[] = [
   { value: 'asc', label: 'Ascending' },
@@ -15,6 +18,11 @@ export default function CategoryPLP({
   params: { category: string };
 }) {
   const [selectedValue, setSelectedValue] = useState<PLPSortOptionType>('asc');
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useSWR(`/api/products/${params.category}?sort=${selectedValue}`);
 
   useEffect(() => {
     console.log('selectedValue > ', selectedValue);
@@ -26,7 +34,7 @@ export default function CategoryPLP({
 
   return (
     <>
-      <h1>{params.category} category PLP</h1>
+      <h1 className={styles.title}>{params.category.replace('%20', ' ')}</h1>
       <Select
         id={0}
         options={sortOptions}
@@ -34,7 +42,10 @@ export default function CategoryPLP({
         onChange={handleChange}
         label={'Sort By'}
       />
-      <CategoryBar />
+      <div className={styles.container}>
+        <CategoryBar />
+        <ProductGrid products={products} />
+      </div>
     </>
   );
 }

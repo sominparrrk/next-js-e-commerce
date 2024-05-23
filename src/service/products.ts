@@ -19,3 +19,13 @@ export async function getAllProducts(sort: string) {
 
   return res.json();
 }
+
+export async function getProductsByCategory(category: string, sort: string) {
+  const res = await fetch(`${basicAPIPath}/category/${category}?sort=${sort}`);
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+}
