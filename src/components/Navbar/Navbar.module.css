@@ -1,6 +1,5 @@
 .box {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   height: 56px;
   padding: var(--spacing-10) var(--spacing-20);
