@@ -17,10 +17,8 @@ export default function HomePage() {
       <p className={styles.description}>{content.description}</p>
       <p>{content.text1}</p>
       <p>{content.text2}</p>
-      <Button>
-        <Link href={content.link} className={styles.link}>
-          Go to Product Listing Page
-        </Link>
+      <Button className={styles.link} url={content.link}>
+        Go to Product Listing Page
       </Button>
     </div>
   );
