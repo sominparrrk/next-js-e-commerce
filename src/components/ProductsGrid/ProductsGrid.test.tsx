@@ -3,9 +3,10 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import ProductGrid from './ProductsGrid';
 import { mockProducts } from '@/mocks/mockProductAPIRes';
+import formatPrice from '@/utils/formatPrice';
 
 describe('ProductGrid', () => {
-  it('renders without crashing', () => {
+  it('renders correctly', () => {
     render(<ProductGrid products={mockProducts} />);
     expect(screen.getByText('Mock Product 1')).toBeInTheDocument();
     expect(screen.getByText('Mock Product 2')).toBeInTheDocument();
@@ -18,10 +19,12 @@ describe('ProductGrid', () => {
       const { title, price, description, category, rating } = product;
 
       expect(screen.getByText(title)).toBeInTheDocument();
-      expect(screen.getByText(`£${price}`)).toBeInTheDocument();
+      expect(screen.getByText(`£${formatPrice(price)}`)).toBeInTheDocument();
       expect(screen.getByText(description)).toBeInTheDocument();
       expect(screen.getByText(category)).toBeInTheDocument();
-      expect(screen.getByText(`Rating: ${rating.rate} (${rating.count} reviews)`)).toBeInTheDocument();
+      expect(
+        screen.getByText(`Rating: ${rating.rate} (${rating.count} reviews)`)
+      ).toBeInTheDocument();
     });
   });
 

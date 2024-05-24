@@ -31,4 +31,14 @@ describe('Button component', () => {
     fireEvent.click(getByText('Click me'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
+
+  it('renders as an <a> when url is provided', () => {
+    const { getByText } = render(
+      <Button url='https://mock.com'>Click me</Button>
+    );
+
+    const linkElement = getByText('Click me');
+    expect(linkElement.tagName).toBe('A');
+    expect(linkElement).toHaveAttribute('href', 'https://mock.com');
+  });
 });

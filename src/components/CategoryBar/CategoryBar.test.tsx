@@ -16,12 +16,12 @@ describe('CategoryBar component', () => {
     (useSWR as jest.Mock).mockReturnValue({
       data: mockCategories,
       isLoading: false,
-      error: null
+      error: null,
     });
     (usePathname as jest.Mock).mockReturnValue('/products');
   });
 
-  it('renders without crashing', async () => {
+  it('renders correctly', async () => {
     render(<CategoryBar />);
     await waitFor(() => {
       expect(useSWR).toHaveBeenCalledWith('/api/categories');
@@ -32,7 +32,7 @@ describe('CategoryBar component', () => {
     const { getByText } = render(<CategoryBar />);
     await waitFor(() => {
       expect(getByText('All')).toBeInTheDocument();
-      mockCategories.forEach(category => {
+      mockCategories.forEach((category) => {
         expect(getByText(category)).toBeInTheDocument();
       });
     });
