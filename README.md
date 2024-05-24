@@ -75,15 +75,15 @@ Next.js 13's file-based [routing and nested layouts](https://nextjs.org/docs/pag
 
 ### Dynamic Routes
 
-: Dynamic routes are used for product categories, enabling navigation to different category pages. This is achieved using Next.js' [dynamic routing](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes), where folder names enclosed in square brackets (`[category]`) define dynamic segments.
+Dynamic routes are used for product categories, enabling navigation to different category pages. This is achieved using Next.js' [dynamic routing](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes), where folder names enclosed in square brackets (`[category]`) define dynamic segments.
 
 ### Data Fetching with SWR
 
-: [SWR](https://swr.vercel.app/) is used for data fetching and it's [recommended officially](https://nextjs.org/docs/pages/building-your-application/data-fetching/client-side). It provides a caching mechanism and optimises data fetching by revalidating data in the background. This ensures that users see the most up-to-date data without compromising performance.
+[SWR](https://swr.vercel.app/) is used for data fetching and it's [recommended officially](https://nextjs.org/docs/pages/building-your-application/data-fetching/client-side). It provides a caching mechanism and optimises data fetching by revalidating data in the background. This ensures that users see the most up-to-date data without compromising performance.
 
 ### `localStorage` for Persistent State
 
-: The search input value is persisted across page transitions using `localStorage`. This allows the input value to be retained even when the user navigates to different pages or refreshes the browser. The value is stored and retrieved from `localStorage`, ensuring a seamless user experience.
+The search input value is persisted across page transitions using `localStorage`. This allows the input value to be retained even when the user navigates to different pages or refreshes the browser. The value is stored and retrieved from `localStorage`, ensuring a seamless user experience.
 
 ## Trade-offs
 
