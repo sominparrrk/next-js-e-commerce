@@ -71,11 +71,11 @@ npm run test
 
 ### Next.js 13 Pages and Layouts
 
-Next.js 13's file-based [routing and nested layouts](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts) are used to structure the codebase of this project. Each major section of the app (e.g. Main(Home & products), Newsletter) has its own layout and page file to maintain a consistent structure and navigation.
+Next.js 13's file-based [routing and nested layouts](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts) are used to structure the codebase of this project. Each major section of the app (e.g. Home & Products, Newsletter) has its own layout file to maintain a consistent structure and navigation.
 
 ### Dynamic Routes
 
-Dynamic routes are used for product categories, enabling navigation to different category pages. This is achieved using Next.js' [dynamic routing](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes), where folder names enclosed in square brackets (`[category]`) define dynamic segments.
+Dynamic routes are used for product categories, enabling navigation to different category pages. This is achieved using Next.js' [dynamic routing](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes), where file name enclosed in square brackets (`[category]`) define dynamic segments.
 
 ### Data Fetching with SWR
 
