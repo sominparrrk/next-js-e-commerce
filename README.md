@@ -55,7 +55,7 @@ To start the development server:
 npm run dev
 ```
 
-Open http://localhost:3000 with your browser to see the app, or you can also try the deployment [here](https://next-js-e-commerce-five.vercel.app/).
+Open http://localhost:3000 with your browser to see the app
 
 ## Testing
 
@@ -79,7 +79,7 @@ Dynamic routes are used for product categories, enabling navigation to different
 
 ### Data Fetching with SWR
 
-[SWR](https://swr.vercel.app/) is used for data fetching and it's [recommended officially](https://nextjs.org/docs/pages/building-your-application/data-fetching/client-side). It provides a caching mechanism and optimises data fetching by revalidating data in the background. This ensures that users see the most up-to-date data without compromising performance.
+[SWR](https://swr.vercel.app/) is used for data fetching and it's [recommended officially](https://nextjs.org/docs/pages/building-your-application/data-fetching/client-side#client-side-data-fetching-with-swr). It provides a caching mechanism and optimises data fetching by revalidating data in the background. This ensures that users see the most up-to-date data without compromising performance.
 
 ### `localStorage` for Persistent State
 
