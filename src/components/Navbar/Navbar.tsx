@@ -1,10 +1,13 @@
-'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 import styles from './Navbar.module.css';
 import { useState, useRef, useEffect, MutableRefObject } from 'react';
 import { CloseIcon } from '../icons/Close';
 import { BurgerMenuIcon } from '../icons/BurgerMenu';
+
+type NavbarProps = {
+  pathname: string;
+};
 
 interface MenuItem {
   name: string;
@@ -26,8 +29,7 @@ const menu: MenuItem[] = [
   },
 ];
 
-export default function Navbar() {
-  const pathName = usePathname();
+export default function Navbar({ pathname }: NavbarProps) {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const menuRef: MutableRefObject<HTMLUListElement | null> = useRef(null);
   const burgerIconRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
@@ -80,7 +82,7 @@ export default function Navbar() {
         }`}
       >
         {menu.map((item) => {
-          const isOnPath = pathName === item.href;
+          const isOnPath = pathname === item.href;
           return (
             <li
               key={item.href}

@@ -1,14 +1,28 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from '@testing-library/react';
 import useSWR from 'swr';
 import { PLPSortOptionType } from '@/types/sort';
-import AllProductListingPage from './page';
+import AllProductListingPage from '.';
+import CategoryPLP from './[category]';
 
 jest.mock('swr', () => ({
   __esModule: true,
   default: jest.fn(),
+}));
+
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockReturnValue({
+    pathname: '/',
+    query: {},
+  }),
 }));
 
 jest.mock('@/components/CategoryBar/CategoryBar', () => () => (
@@ -82,7 +96,7 @@ describe('AllProductListingPage', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders products grid on success', () => {
+  it('renders products grid', () => {
     const mockProducts = [
       { id: 1, title: 'Product 1' },
       { id: 2, title: 'Product 2' },
@@ -123,7 +137,91 @@ describe('AllProductListingPage', () => {
     render(<AllProductListingPage />);
 
     const select = screen.getByTestId('select') as HTMLSelectElement;
-    fireEvent.change(select, { target: { value: 'desc' } });
+    await act(async () => {
+      fireEvent.change(select, { target: { value: 'desc' } });
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('ProductsGrid: 2 products')).toBeInTheDocument();
+    });
+  });
+});
+
+describe('CategoryPLP', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders loading indicator while loading', () => {
+    (useSWR as jest.Mock).mockReturnValue({
+      data: null,
+      isLoading: true,
+      error: null,
+    });
+
+    render(<CategoryPLP />);
+
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+  });
+
+  it('renders error message on error', () => {
+    (useSWR as jest.Mock).mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: true,
+    });
+
+    render(<CategoryPLP />);
+
+    expect(
+      screen.getByText('Error occurred while fetching data')
+    ).toBeInTheDocument();
+  });
+
+  it('renders products grid', () => {
+    const mockProducts = [
+      { id: 1, title: 'Product 1' },
+      { id: 2, title: 'Product 2' },
+    ];
+    (useSWR as jest.Mock).mockReturnValue({
+      data: mockProducts,
+      isLoading: false,
+      error: null,
+    });
+
+    render(<CategoryPLP />);
+
+    expect(screen.getByText('ProductsGrid: 2 products')).toBeInTheDocument();
+  });
+
+  it('changes sort order when new option is selected', async () => {
+    const mockProductsAsc = [
+      { id: 1, title: 'Product 1' },
+      { id: 2, title: 'Product 2' },
+    ];
+    const mockProductsDesc = [
+      { id: 3, title: 'Product 3' },
+      { id: 4, title: 'Product 4' },
+    ];
+
+    (useSWR as jest.Mock)
+      .mockReturnValueOnce({
+        data: mockProductsAsc,
+        isLoading: false,
+        error: null,
+      })
+      .mockReturnValueOnce({
+        data: mockProductsDesc,
+        isLoading: false,
+        error: null,
+      });
+
+    render(<CategoryPLP />);
+
+    const select = screen.getByTestId('select') as HTMLSelectElement;
+    await act(async () => {
+      fireEvent.change(select, { target: { value: 'desc' } });
+    });
 
     await waitFor(() => {
       expect(screen.getByText('ProductsGrid: 2 products')).toBeInTheDocument();

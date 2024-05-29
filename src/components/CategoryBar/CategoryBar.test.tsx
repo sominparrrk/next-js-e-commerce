@@ -3,11 +3,16 @@ import '@testing-library/jest-dom';
 import { render, waitFor } from '@testing-library/react';
 import CategoryBar from './CategoryBar';
 import useSWR from 'swr';
-import { usePathname } from 'next/navigation';
 import styles from './CategoryBar.module.css';
 
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockReturnValue({
+    pathname: '/products',
+    query: { category: 'category1' },
+  }),
+}));
+
 jest.mock('swr');
-jest.mock('next/navigation');
 
 describe('CategoryBar component', () => {
   const mockCategories = ['category1', 'category2', 'category3'];
@@ -18,18 +23,31 @@ describe('CategoryBar component', () => {
       isLoading: false,
       error: null,
     });
-    (usePathname as jest.Mock).mockReturnValue('/products');
   });
 
   it('renders correctly', async () => {
-    render(<CategoryBar />);
+    render(
+      <CategoryBar
+        pathname='/products'
+        query={{
+          category: 'category1',
+        }}
+      />
+    );
     await waitFor(() => {
       expect(useSWR).toHaveBeenCalledWith('/api/categories');
     });
   });
 
   it('renders category links', async () => {
-    const { getByText } = render(<CategoryBar />);
+    const { getByText } = render(
+      <CategoryBar
+        pathname='/products'
+        query={{
+          category: 'category1',
+        }}
+      />
+    );
     await waitFor(() => {
       expect(getByText('All')).toBeInTheDocument();
       mockCategories.forEach((category) => {
@@ -39,8 +57,14 @@ describe('CategoryBar component', () => {
   });
 
   it('highlights selected category', async () => {
-    (usePathname as jest.Mock).mockReturnValueOnce('/products/category1');
-    const { getByText } = render(<CategoryBar />);
+    const { getByText } = render(
+      <CategoryBar
+        pathname='/products/category1'
+        query={{
+          category: 'category1',
+        }}
+      />
+    );
     await waitFor(() => {
       expect(getByText('All').parentNode).not.toHaveClass(styles.selected);
       expect(getByText('category1').parentNode).toHaveClass(styles.selected);

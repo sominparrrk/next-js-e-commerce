@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import styles from './page.module.css';
+import styles from './home.module.css';
 import Button from '@/components/Button/Button';
 
 const content = {

@@ -2,17 +2,21 @@ import '@testing-library/jest-dom';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import Navbar from './Navbar';
 import styles from './Navbar.module.css';
-import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 
-jest.mock('next/navigation');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockReturnValue({
+    pathname: '/products',
+  }),
+}));
 
 describe('Navbar component', () => {
   beforeAll(() => {
-    (usePathname as jest.Mock).mockReturnValue('/');
+    (useRouter as jest.Mock).mockReturnValue({ pathname: '/' });
   });
 
   it('renders navbar', () => {
-    const { getByText } = render(<Navbar />);
+    const { getByText } = render(<Navbar pathname='/products' />);
 
     const homeLink = getByText('Home');
     const productsLink = getByText('Products');
@@ -23,7 +27,9 @@ describe('Navbar component', () => {
   });
 
   it('opens and closes mobile menu', () => {
-    const { getByLabelText, getByText } = render(<Navbar />);
+    const { getByLabelText, getByText } = render(
+      <Navbar pathname='/products' />
+    );
 
     const burgerMenuIcon = getByLabelText('menu-open-icon');
     expect(burgerMenuIcon).toBeInTheDocument();
@@ -46,7 +52,9 @@ describe('Navbar component', () => {
   });
 
   it('closes mobile menu when clicking outside', () => {
-    const { getByLabelText, container } = render(<Navbar />);
+    const { getByLabelText, container } = render(
+      <Navbar pathname='/products' />
+    );
 
     const burgerMenuIcon = getByLabelText('menu-open-icon');
     fireEvent.click(burgerMenuIcon);
@@ -60,8 +68,8 @@ describe('Navbar component', () => {
   });
 
   it('highlights selected menu', async () => {
-    (usePathname as jest.Mock).mockReturnValueOnce('/products');
-    const { getByText } = render(<Navbar />);
+    (useRouter as jest.Mock).mockReturnValueOnce('/products');
+    const { getByText } = render(<Navbar pathname='/products' />);
 
     const productsLink = getByText('Products');
     await waitFor(() => {
