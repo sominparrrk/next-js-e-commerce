@@ -15,7 +15,8 @@ interface SelectProps {
   id: number;
 }
 
-const Select: React.FC<SelectProps> = function ({ options, value, onChange, label, id }) {
+export default function Select(props: SelectProps) {
+  const { options, value, onChange, label, id } = props;
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value as PLPSortOptionType);
   };
@@ -37,6 +38,4 @@ const Select: React.FC<SelectProps> = function ({ options, value, onChange, labe
       </select>
     </div>
   );
-};
-
-export default Select;
+}
