@@ -1,7 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import CategoryBar from '@/components/CategoryBar/CategoryBar';
 import ProductGrid from '@/components/ProductsGrid/ProductsGrid';
 import Select from '@/components/Select/Select';
 import LoadingIndicator from '@/components/LoadingIndicator/LoadingIndicator';
@@ -35,6 +34,10 @@ export default function CategoryPLP() {
   const handleChange = (value: PLPSortOptionType) => {
     setSelectedValue(value);
   };
+
+  useEffect(() => {
+    setSelectedValue('asc');
+  }, [query.category]);
 
   return (
     <>
