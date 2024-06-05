@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import styles from './Navbar.module.css';
 import { useState, useRef, useEffect, MutableRefObject } from 'react';
 import { CloseIcon } from '../icons/Close';
@@ -82,7 +81,7 @@ export default function Navbar({ pathname }: NavbarProps) {
         }`}
       >
         {menu.map((item) => {
-          const isOnPath = pathname === item.href;
+          const isOnPath = pathname.replace('/[category]', '') === item.href;
           return (
             <li
               key={item.href}
