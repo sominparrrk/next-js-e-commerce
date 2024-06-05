@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import styles from './Navbar.module.css';
 import { useState, useRef, useEffect, MutableRefObject } from 'react';
 import { CloseIcon } from '../icons/Close';
