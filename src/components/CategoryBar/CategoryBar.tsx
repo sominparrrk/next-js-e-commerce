@@ -17,7 +17,8 @@ export default function CategoryBar({ pathname, query }: CategoryBarProps) {
       <div className={styles.listContainer}>
         <ul className={styles.list}>
           <li className={pathname === allPath ? styles.selected : undefined}>
-            <Link href='/products'>All</Link>
+            {/* already declared '/products' with allPath 😅😅 */}
+            <Link href={allPath}>All</Link>
           </li>
           {!error &&
             categories?.map((category: string) => {
