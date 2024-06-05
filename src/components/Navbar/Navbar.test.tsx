@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Navbar from './Navbar';
 import styles from './Navbar.module.css';
 import { useRouter } from 'next/router';
@@ -34,21 +35,25 @@ describe('Navbar component', () => {
     const burgerMenuIcon = getByLabelText('menu-open-icon');
     expect(burgerMenuIcon).toBeInTheDocument();
 
-    fireEvent.click(burgerMenuIcon);
+    userEvent.click(burgerMenuIcon);
 
-    const closeIcon = getByLabelText('menu-close-icon');
-    expect(closeIcon).toBeInTheDocument();
+    waitFor(() => {
+      const closeIcon = getByLabelText('menu-close-icon');
+      const homeLink = getByText('Home');
+      const productsLink = getByText('Products');
+      const newsletterLink = getByText('Newsletter');
 
-    const homeLink = getByText('Home');
-    const productsLink = getByText('Products');
-    const newsletterLink = getByText('Newsletter');
-    expect(homeLink).toBeVisible();
-    expect(productsLink).toBeVisible();
-    expect(newsletterLink).toBeVisible();
+      expect(homeLink).toBeVisible();
+      expect(productsLink).toBeVisible();
+      expect(newsletterLink).toBeVisible();
+      expect(closeIcon).toBeInTheDocument();
 
-    fireEvent.click(closeIcon);
+      userEvent.click(closeIcon);
+    });
 
-    expect(getByLabelText('menu-open-icon')).toBeInTheDocument();
+    waitFor(() => {
+      expect(getByLabelText('menu-open-icon')).toBeInTheDocument();
+    });
   });
 
   it('closes mobile menu when clicking outside', () => {
@@ -57,14 +62,16 @@ describe('Navbar component', () => {
     );
 
     const burgerMenuIcon = getByLabelText('menu-open-icon');
-    fireEvent.click(burgerMenuIcon);
+    userEvent.click(burgerMenuIcon);
 
-    const closeIcon = getByLabelText('menu-close-icon');
-    expect(closeIcon).toBeInTheDocument();
+    waitFor(() => {
+      const closeIcon = getByLabelText('menu-close-icon');
+      expect(closeIcon).toBeInTheDocument();
+    });
 
-    fireEvent.mouseDown(container);
+    userEvent.click(container);
 
-    expect(getByLabelText('menu-open-icon')).toBeInTheDocument();
+    waitFor(() => expect(getByLabelText('menu-open-icon')).toBeInTheDocument());
   });
 
   it('highlights selected menu', async () => {

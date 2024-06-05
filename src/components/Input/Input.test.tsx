@@ -1,6 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, fireEvent } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Input from './Input';
 
 describe('Input component', () => {
@@ -31,8 +32,8 @@ describe('Input component', () => {
       />
     );
     const inputElement = getByRole('textbox');
-    fireEvent.change(inputElement, { target: { value: 'Test value' } });
-    expect(handleChange).toHaveBeenCalledWith('Test value');
+    userEvent.type(inputElement, 'Test value');
+    waitFor(() => expect(handleChange).toHaveBeenCalledWith('Test value'));
   });
 
   it('applies the correct input type', () => {

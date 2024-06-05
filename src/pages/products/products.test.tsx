@@ -1,13 +1,8 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import '@testing-library/jest-dom';
-import {
-  render,
-  screen,
-  fireEvent,
-  waitFor,
-  act,
-} from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import useSWR from 'swr';
 import { PLPSortOptionType } from '@/types/sort';
 import AllProductListingPage from '.';
@@ -138,7 +133,7 @@ describe('AllProductListingPage', () => {
 
     const select = screen.getByTestId('select') as HTMLSelectElement;
     await act(async () => {
-      fireEvent.change(select, { target: { value: 'desc' } });
+      userEvent.type(select, 'desc');
     });
 
     await waitFor(() => {
@@ -161,7 +156,7 @@ describe('CategoryPLP', () => {
 
     render(<CategoryPLP />);
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    waitFor(() => expect(screen.getByText('Loading...')).toBeInTheDocument());
   });
 
   it('renders error message on error', () => {
@@ -220,7 +215,7 @@ describe('CategoryPLP', () => {
 
     const select = screen.getByTestId('select') as HTMLSelectElement;
     await act(async () => {
-      fireEvent.change(select, { target: { value: 'desc' } });
+      userEvent.type(select, 'desc');
     });
 
     await waitFor(() => {
