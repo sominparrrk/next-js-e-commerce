@@ -3,6 +3,7 @@ import { DM_Sans } from 'next/font/google';
 import './globals.css';
 import MainLayout from '@/components/Layout/MainLayout';
 import { useRouter } from 'next/router';
+import SubLayout from '@/components/Layout/SubLayout';
 
 type NextPageWithLayout = AppProps['Component'] & {
   getLayout?: (page: React.ReactNode) => React.ReactNode;
@@ -27,7 +28,11 @@ export default function App({ Component, pageProps }: AppProps) {
         }
       `}</style>
       {isNewsletterRoute ? (
-        getLayout(<PageComponent {...pageProps} />)
+        getLayout(
+          <SubLayout>
+            <PageComponent {...pageProps} />
+          </SubLayout>
+        )
       ) : (
         <MainLayout>{getLayout(<PageComponent {...pageProps} />)}</MainLayout>
       )}

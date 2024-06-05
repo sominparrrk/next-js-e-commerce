@@ -1,6 +1,5 @@
 import { ReactElement } from 'react';
 import styles from './newsletter.module.css';
-import SubLayout from '@/components/Layout/SubLayout';
 
 const content = {
   title: 'Newsletter',
@@ -19,5 +18,5 @@ export default function NewsletterPage() {
 }
 
 NewsletterPage.getLayout = function getLayout(page: ReactElement) {
-  return <SubLayout>{page}</SubLayout>;
+  return <>{page}</>;
 };
