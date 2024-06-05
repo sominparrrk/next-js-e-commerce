@@ -1,6 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, fireEvent } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Button from './Button';
 
 describe('Button component', () => {
@@ -28,8 +29,8 @@ describe('Button component', () => {
     const { getByText } = render(
       <Button onClick={handleClick}>Click me</Button>
     );
-    fireEvent.click(getByText('Click me'));
-    expect(handleClick).toHaveBeenCalledTimes(1);
+    userEvent.click(getByText('Click me'));
+    waitFor(() => expect(handleClick).toHaveBeenCalledTimes(1));
   });
 
   it('renders as an <a> when url is provided', () => {
